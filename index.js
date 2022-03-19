@@ -5,14 +5,14 @@ const navbar = document.querySelector("div#navbar");
 const content = document.querySelector("main");
 const science = document.querySelector("li#science");
 const float = document.querySelector("#float");
-const newsurl = document.querySelector('#newsurl')
+const newsurl = document.querySelector("#newsurl");
 const sports = document.querySelector("li#sports");
 const business = document.querySelector("li#business");
 const politics = document.querySelector("li#politics");
 const modalp = document.querySelector("#modalp");
 
 const modal = document.querySelector("#modal");
-const p = document.querySelector('#like')
+const p = document.querySelector("#like");
 const wholebody = document.querySelector("#whole-body");
 const btnclose = document.querySelector("#close");
 const modalheading = document.querySelector("#headingofmodal");
@@ -25,7 +25,7 @@ const thankyou = document.querySelector("#thankyou");
 const API =
     "https://newsapi.in/newsapi/news.php?key=5PqRdw8t9TiQBKfPMpXnFrDAScMF8c&category=india_english";
 let page = 1;
-let state = null;
+
 
 navdisplay.addEventListener("click", (event) => {
     const trigger = event.target;
@@ -69,10 +69,8 @@ async function fetchNewsDetails(url) {
     try {
         const response = await fetch(`${url}`);
         news = (await response.json()).News;
-        console.log(news);
         const first = news.slice(0, 10);
-        // float.innerHTML = `<marquee scrollamount="12">Top News</marquee> `
-        togglenavigation();
+        // togglenavigation();
         renderdata(first);
     } catch (error) {
         console.error(error);
@@ -97,10 +95,8 @@ function renderdata(data) {
     )}' id="newspublished">Date published: ${char.published_date}</p>
     </div>`;
     });
-    // document.querySelector('#newsurl').classList.toggle('hide')
     content.innerHTML = d.join("");
 }
-
 
 content.addEventListener("click", (event) => {
     const trigger = event.target;
@@ -111,7 +107,7 @@ content.addEventListener("click", (event) => {
 
         modalp.innerHTML = ` ${char.description}`;
 
-        newsurl.href = `${char.url}`
+        newsurl.href = `${char.url}`;
     } catch (err) {
         console.log("Error: ", err.message);
     }
@@ -119,53 +115,48 @@ content.addEventListener("click", (event) => {
     wholebody.classList.add("opac");
 });
 
-
 btnclose.addEventListener("click", () => {
     modal.classList.remove("active");
     wholebody.classList.remove("opac");
 });
 
 footer.addEventListener("click", (event) => {
+
     let nextpage = page + 1;
 
     if (event.target === prevBtn) {
         prevpage = nextpage - 1;
         page = prevpage - 1;
         const as = news.slice(page * 10, prevpage * 10);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         renderdata(as);
+        return page;
     }
     if (event.target === nextBtn) {
-        console.log("nextbtn");
         const as = news.slice(page * 10, nextpage * 10);
-
         page = nextpage;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
         renderdata(as);
+        return page;
+
     }
-    return (state = 2);
+
 });
 
+// function togglenavigation() {
 
-function togglenavigation() {
-    if (state === null) {
-        prevBtn.disabled = true;
-    } else {
-        prevBtn.disabled = false;
-    }
-}
+// }
 
 heartbar.addEventListener("click", (event) => {
     if (event.target === heart) {
-
         heart.classList.toggle("color");
         if (p.innerHTML === "Give us a like !") {
             p.innerHTML = "Thankyou for your love and support";
         } else {
             p.innerHTML = "Give us a like !";
-
         }
     }
 });
-
-
 
 fetchNewsDetails(API);
