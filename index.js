@@ -71,6 +71,7 @@ async function fetchNewsDetails(url) {
         news = (await response.json()).News;
         const first = news.slice(0, 10);
         // togglenavigation();
+        prevBtn.disabled = true;
         renderdata(first);
     } catch (error) {
         console.error(error);
@@ -136,7 +137,7 @@ footer.addEventListener("click", (event) => {
         const as = news.slice(page * 10, nextpage * 10);
         page = nextpage;
         window.scrollTo({ top: 0, behavior: 'smooth' });
-
+        prevBtn.disabled = false;
         renderdata(as);
         return page;
 
@@ -144,9 +145,12 @@ footer.addEventListener("click", (event) => {
 
 });
 
-// function togglenavigation() {
+function togglenavigation() {
+    if (page === 1) { prevBtn.disabled = true; } else {
+        prevBtn.disabled = false;
+    }
 
-// }
+}
 
 heartbar.addEventListener("click", (event) => {
     if (event.target === heart) {
