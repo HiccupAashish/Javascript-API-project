@@ -10,7 +10,6 @@ const sports = document.querySelector("li#sports");
 const business = document.querySelector("li#business");
 const politics = document.querySelector("li#politics");
 const modalp = document.querySelector("#modalp");
-
 const modal = document.querySelector("#modal");
 const p = document.querySelector("#like");
 const wholebody = document.querySelector("#whole-body");
@@ -25,7 +24,6 @@ const thankyou = document.querySelector("#thankyou");
 const API =
     "https://newsapi.in/newsapi/news.php?key=5PqRdw8t9TiQBKfPMpXnFrDAScMF8c&category=india_english";
 let page = 1;
-
 
 navdisplay.addEventListener("click", (event) => {
     const trigger = event.target;
@@ -70,8 +68,6 @@ async function fetchNewsDetails(url) {
         const response = await fetch(`${url}`);
         news = (await response.json()).News;
         const first = news.slice(0, 10);
-        // togglenavigation();
-        prevBtn.disabled = true;
         renderdata(first);
     } catch (error) {
         console.error(error);
@@ -122,35 +118,27 @@ btnclose.addEventListener("click", () => {
 });
 
 footer.addEventListener("click", (event) => {
-
     let nextpage = page + 1;
 
     if (event.target === prevBtn) {
         prevpage = nextpage - 1;
         page = prevpage - 1;
-        const as = news.slice(page * 10, prevpage * 10);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        renderdata(as);
-        return page;
+        if (page > 0 || page === 0) {
+            const as = news.slice(page * 10, prevpage * 10);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            renderdata(as);
+        } else {
+            alert("No more previous page to load");
+        }
     }
     if (event.target === nextBtn) {
         const as = news.slice(page * 10, nextpage * 10);
         page = nextpage;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        prevBtn.disabled = false;
+        window.scrollTo({ top: 0, behavior: "smooth" });
         renderdata(as);
         return page;
-
     }
-
 });
-
-function togglenavigation() {
-    if (page === 1) { prevBtn.disabled = true; } else {
-        prevBtn.disabled = false;
-    }
-
-}
 
 heartbar.addEventListener("click", (event) => {
     if (event.target === heart) {
