@@ -125,17 +125,20 @@ footer.addEventListener("click", (event) => {
         page = prevpage - 1;
         if (page > 0 || page === 0) {
             const as = news.slice(page * 10, prevpage * 10);
-            window.scrollTo({ top: 0, behavior: "smooth" });
+
             renderdata(as);
+            window.scrollTo({ top: 0, behavior: "smooth" });
         } else {
             alert("No more previous page to load");
         }
     }
     if (event.target === nextBtn) {
+        if (page === 0) { page = page + 1; }
         const as = news.slice(page * 10, nextpage * 10);
         page = nextpage;
-        window.scrollTo({ top: 0, behavior: "smooth" });
+
         renderdata(as);
+        window.scrollTo({ top: 0, behavior: "smooth" });
         return page;
     }
 });
