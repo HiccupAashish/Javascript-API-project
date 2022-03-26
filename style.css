@@ -120,6 +120,15 @@ main#forgap {
     display: none;
 }
 
+#liker {
+    bottom: 0px;
+    background-color: blue;
+    position: absolute;
+    width: 100%;
+    padding-top: 10px;
+    text-align: right;
+}
+
 #modal {
     position: fixed;
     left: 50%;
@@ -195,7 +204,7 @@ main#forgap {
     background: transparent;
     outline: none;
     border: none;
-    color: white;
+    color: black;
     border-color: black;
 }
 
@@ -217,4 +226,8 @@ main#forgap {
 button.btn {
     font-size: 2em;
     border: none;
+}
+
+#addfavourates {
+    padding-bottom: 0px;
 }
