@@ -5,7 +5,7 @@ body {
 }
 
 #whole-body {
-    background-color: #edf6f9;
+    background-color: #2a9d8f;
 }
 
 .opac {
@@ -23,8 +23,8 @@ header {
 .heading {
     width: 100%;
     height: 5em;
-    background-color: #81b29a;
-    background-image: url(Images/wallpaperflare-cropped\ \(1\).jfif);
+    background-color: #2a9d8f;
+    /* background-image: url(Images/wallpaperflare-cropped\ \(1\).jfif); */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -67,19 +67,26 @@ div#navbar {
 }
 
 button#categories {
-    float: right;
+    /* float: right; */
     width: 10%;
     margin-right: 4px;
     overflow: auto;
     position: absolute;
     right: 20px;
     top: 30px;
-    background-color: #ffddd2;
+    background: transparent;
     border: none;
+    
+    
 }
+
+    
+
 
 #categories:hover {
     background-color: #ddbea9;
+    border-radius: 10px;
+    transform: translateY(-10px) scale(1);;
 }
 
 li:hover {
@@ -119,10 +126,14 @@ main#forgap {
 .hide {
     display: none;
 }
-
+#favourates{
+    height: 10em;
+    width: 100%;
+    
+}
 #liker {
     bottom: 0px;
-    background-color: blue;
+    background:transparent;
     position: absolute;
     width: 100%;
     padding-top: 10px;
@@ -204,7 +215,7 @@ main#forgap {
     background: transparent;
     outline: none;
     border: none;
-    color: black;
+    color: grey;
     border-color: black;
 }
 
