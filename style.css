@@ -127,8 +127,10 @@ main#forgap {
     display: none;
 }
 #favourates{
-    height: 10em;
+   
     width: 100%;
+    overflow-wrap: break-word;
+    
     
 }
 #liker {

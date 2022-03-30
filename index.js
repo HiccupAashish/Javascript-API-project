@@ -23,9 +23,9 @@ const heartbar = document.querySelector("#heart");
 const head = document.querySelector("#favourates");
 const fhead = document.querySelector("#favouratesheading");
 const thankyou = document.querySelector("#thankyou");
+
 // let cat = "india_english_sports";
 const API = `https://newsapi.in/newsapi/news.php?key=JEmFLvIQgnPTtY4oSx47exUeXwJalI&category=`;
-let page = 1;
 
 navdisplay.addEventListener("click", (event) => {
   const trigger = event.target;
@@ -70,12 +70,12 @@ navbar.addEventListener("click", (event) => {
 let news;
 async function fetchNewsDetails(url) {
   try {
-    console.log(url);
+    
     const response = await fetch(url);
     // console.log(response)
     // console.log( await response.json())
     news = (await response.json()).News;
-    console.log(news)
+    // console.log(news);
     const first = news.slice(0, 10);
     renderdata(first);
   } catch (error) {
@@ -84,7 +84,6 @@ async function fetchNewsDetails(url) {
 }
 
 function renderdata(data) {
-  let like = "";
   const d = data.map((article) => {
     return `<div  data-article='${JSON.stringify(article)}' class="card"> 
     <h2 data-article='${JSON.stringify(article)}'>${article.title}</h2>
@@ -112,26 +111,42 @@ function renderdata(data) {
   });
   content.innerHTML = d.join("");
 }
+
 function myFunction(event) {
   const trigger = event.target;
-
-  trigger.classList.add("color");
-
   const char = JSON.parse(trigger.dataset.article);
+//   const nodelink = document.createTextNode(`${char.url}`);
   const node = document.createTextNode(`${char.title}`);
   but = document.createElement("button");
-const para= document.createElement("p")
+  const array=[]
+  const para = document.createElement("p");
+  para.id = "listing";
+  head.classList.remove("hide");
+  
   para.appendChild(node);
   para.appendChild(but);
+  
+  if (trigger.classList.contains("color")) {
+   
+  } 
+  else
+   {
+    trigger.classList.add("color");
+    head.appendChild(para);
+    array.push(para)
+    console.log(array)
+  }
+ 
 
   but.addEventListener("click", (event) => {
-    const button= event.target
-  button.removeChild(para)
-    // fhead.removeChild(node);
-    // fhead.removeChild(but);
+    const button = event.target;
+    button.parentElement.remove();
     trigger.classList.remove("color");
-  })
-  
+    const le = document.querySelector("#listing");
+    if (le == null) {
+      head.classList.add("hide");
+    }
+  });
 }
 
 content.addEventListener("click", (event) => {
@@ -156,54 +171,42 @@ btnclose.addEventListener("click", () => {
   modal.classList.remove("active");
   wholebody.classList.remove("opac");
 });
+let page;
+prevBtn.disabled = true;
 
 footer.addEventListener("click", (event) => {
-  let nextpage = page + 1;
+  let firstindexforw;
+  let lastindexforw;
+  let firstindexback;
+  let lastindexback;
+
+  console.log(page);
+  if (page === 1) {
+    prevBtn.disabled = true;
+  }
 
   if (event.target === prevBtn) {
-    prevpage = nextpage - 1;
-    page = prevpage - 1;
-    if (page > 0 || page === 0) {
-      const as = news.slice(page * 10, prevpage * 10);
-
-      renderdata(as);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      alert("No more previous page to load");
-    }
-  }
-  if (event.target === nextBtn) {
-    if (page === 0) {
-      page = page + 1;
-    }
-    const as = news.slice(page * 10, nextpage * 10);
-    page = nextpage;
-
+    firstindexback = page - 1;
+    lastindexback = page;
+    const as = news.slice(firstindexback * 10, lastindexback * 10);
+    page = page - 1;
+    console.log(page);
     renderdata(as);
     window.scrollTo({ top: 0, behavior: "smooth" });
-    return page;
+  }
+  if (event.target === nextBtn) {
+    if (page === undefined) {
+      page = 0;
+    }
+    prevBtn.disabled = false;
+    firstindexforw = page + 1;
+    lastindexforw = firstindexforw + 1;
+    const as = news.slice(firstindexforw * 10, lastindexforw * 10);
+    page = page + 1;
+    console.log(page);
+    renderdata(as);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 });
-// const liker = document.querySelector("#liker");
-// console.log("button:" + liker);
-// like.addEventListener("click", () => {
-//   // heart.classList.toggle('color');
-//   console.log("Aashish");
-// });
-// heartbar.addEventListener("click", (event) => {
-//     if (event.target === heart) {
-//         heart.classList.toggle("color");
-//         if (p.innerHTML === "Give us a like !") {
-//             p.innerHTML = "Thankyou for your love and support";
-//         } else {
-//             p.innerHTML = "Give us a like !";
-//         }
-//     }
-// // });
-// like.addEventListener('click', () => {
-//             // heart.classList.toggle('color');
-//             console.log("Aashish")
-// })
 
-// console.log(like)
 fetchNewsDetails(API + "india_english");
