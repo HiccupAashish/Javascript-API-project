@@ -21,10 +21,7 @@ const prevBtn = document.querySelector(".prevBtn");
 const nextBtn = document.querySelector(".nextBtn");
 const heartbar = document.querySelector("#heart");
 const head = document.querySelector("#favourates");
-const fhead = document.querySelector("#favouratesheading");
 const thankyou = document.querySelector("#thankyou");
-
-// let cat = "india_english_sports";
 const API = `https://newsapi.in/newsapi/news.php?key=JEmFLvIQgnPTtY4oSx47exUeXwJalI&category=`;
 
 navdisplay.addEventListener("click", (event) => {
@@ -36,7 +33,7 @@ navdisplay.addEventListener("click", (event) => {
 
 header.addEventListener("click", () => {
   float.innerHTML = `<marquee scrollamount="12">Top News</marquee> `;
-  fetchNewsDetails(API);
+  fetchNewsDetails(API + "india_english");
 });
 
 navbar.addEventListener("click", (event) => {
@@ -46,23 +43,23 @@ navbar.addEventListener("click", (event) => {
 
     // fetchNewsDetails(API + "india_english_science")
     fetchNewsDetails(
-      "https://newsapi.in/newsapi/news.php?key=5PqRdw8t9TiQBKfPMpXnFrDAScMF8c&category=india_english_science"
+      "https://newsapi.in/newsapi/news.php?key=JEmFLvIQgnPTtY4oSx47exUeXwJalI&category=india_english_science"
       // cat="india_english_science";
     );
   } else if (tg.id === "sports") {
     float.innerHTML = `<marquee scrollamount="12">Sports </marquee> `;
     fetchNewsDetails(
-      "https://newsapi.in/newsapi/news.php?key=5PqRdw8t9TiQBKfPMpXnFrDAScMF8c&category=india_english_sports"
+      "https://newsapi.in/newsapi/news.php?key=JEmFLvIQgnPTtY4oSx47exUeXwJalI&category=india_english_sports"
     );
   } else if (tg.id === "business") {
     float.innerHTML = `<marquee scrollamount="12">Business</marquee> `;
     fetchNewsDetails(
-      "https://newsapi.in/newsapi/news.php?key=5PqRdw8t9TiQBKfPMpXnFrDAScMF8c&category=india_english_business"
+      "https://newsapi.in/newsapi/news.php?key=JEmFLvIQgnPTtY4oSx47exUeXwJalI&category=india_english_business"
     );
   } else {
     float.innerHTML = `<marquee scrollamount="12">Politics</marquee> `;
     fetchNewsDetails(
-      "https://newsapi.in/newsapi/news.php?key=5PqRdw8t9TiQBKfPMpXnFrDAScMF8c&category=india_english_politics"
+      "https://newsapi.in/newsapi/news.php?key=JEmFLvIQgnPTtY4oSx47exUeXwJalI&category=india_english_politics"
     );
   }
 });
@@ -70,7 +67,6 @@ navbar.addEventListener("click", (event) => {
 let news;
 async function fetchNewsDetails(url) {
   try {
-    
     const response = await fetch(url);
     // console.log(response)
     // console.log( await response.json())
@@ -111,37 +107,53 @@ function renderdata(data) {
   });
   content.innerHTML = d.join("");
 }
-
+const array = [];
 function myFunction(event) {
   const trigger = event.target;
   const char = JSON.parse(trigger.dataset.article);
-//   const nodelink = document.createTextNode(`${char.url}`);
+  //   const nodelink = document.createTextNode(`${char.url}`);
   const node = document.createTextNode(`${char.title}`);
+  const pic = document.createElement("img");
+  pic.src = `${char.image}`;
+  pic.id = "favouratepic";
   but = document.createElement("button");
-  const array=[]
+  but.id = "removebutton";
+  but.innerHTML = "Remove";
   const para = document.createElement("p");
   para.id = "listing";
   head.classList.remove("hide");
-  
+
   para.appendChild(node);
+  para.appendChild(pic);
   para.appendChild(but);
-  
+
   if (trigger.classList.contains("color")) {
-   
-  } 
-  else
-   {
-    trigger.classList.add("color");
-    head.appendChild(para);
-    array.push(para)
+      // head.remove()
+    head.innerHTML = "";
+    trigger.classList.remove("color");
+    array.pop(para);
     console.log(array)
+    array.map((char) => {
+      head.appendChild(char);
+    });
+  } else {
+    trigger.classList.add("color");
+
+    array.push(para);
+    array.forEach((char) => {
+      head.appendChild(char);
+    });
+    // console.log(array)
   }
- 
 
   but.addEventListener("click", (event) => {
     const button = event.target;
     button.parentElement.remove();
     trigger.classList.remove("color");
+    array.pop(para);
+    array.forEach((char) => {
+      head.appendChild(char);
+    });
     const le = document.querySelector("#listing");
     if (le == null) {
       head.classList.add("hide");
@@ -190,7 +202,6 @@ footer.addEventListener("click", (event) => {
     lastindexback = page;
     const as = news.slice(firstindexback * 10, lastindexback * 10);
     page = page - 1;
-    console.log(page);
     renderdata(as);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -208,5 +219,16 @@ footer.addEventListener("click", (event) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 });
+thankyou.addEventListener('click',event=>{
+  if(event.target.classList.contains("color")){
+    event.target.classList.remove('color')
+  p.innerHTML="Give us a Like!";
+  }else{
+    event.target.classList.add('color')
+    p.innerHTML="Thankyou for your love and Support";
+  }
+  
+
+})
 
 fetchNewsDetails(API + "india_english");

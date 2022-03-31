@@ -86,7 +86,7 @@ button#categories {
 #categories:hover {
     background-color: #ddbea9;
     border-radius: 10px;
-    transform: translateY(-10px) scale(1);;
+    /* transform: translateY(-10px) scale(1);; */
 }
 
 li:hover {
@@ -113,7 +113,8 @@ main#forgap {
     padding-right: 1em;
     padding-bottom: 2em;
     padding-top: 2em;
-    background-image: url(Images/wp7969036-blurry-ultra-hd-wallpapers.jpg);
+    /* background-image: url(Images/wp7969036-blurry-ultra-hd-wallpapers.jpg); */
+    background-color: #3c6e71;
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -122,16 +123,42 @@ main#forgap {
     text-align: right;
     bottom: 0px;
 }
+#listing{
+    background-color:#94d2bd;
+    padding-left: 1em;
+    word-wrap: wrap;
+    padding-right: 1em;
+    /* float: left; */
+    text-align: left;
+    align-items: center;
+}
+#removebutton{
+    height: 35px;
+    width: 80px;
+    background:transparent;
+    border: 1px solid black;
+    float: right;
+    border-radius: 10px;
+
+}
+#removebutton:hover{
+    background-color: red;
+}
 
 .hide {
     display: none;
 }
+
 #favourates{
-   
+   background-color: #355070;
     width: 100%;
-    overflow-wrap: break-word;
-    
-    
+    overflow-wrap: break-word; 
+}
+#favouratepic{
+    height:10em;
+    width: 12em;
+    padding-bottom: 2px;
+
 }
 #liker {
     bottom: 0px;
