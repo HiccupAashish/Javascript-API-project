@@ -68,19 +68,19 @@ let news;
 async function fetchNewsDetails(url) {
   try {
     const response = await fetch(url);
-    // console.log(response)
-    // console.log( await response.json())
     news = (await response.json()).News;
-    // console.log(news);
     const first = news.slice(0, 10);
     renderdata(first);
   } catch (error) {
     console.error(error);
   }
 }
+const array = [];
+const checkarray = [];
 
 function renderdata(data) {
   const d = data.map((article) => {
+  
     return `<div  data-article='${JSON.stringify(article)}' class="card"> 
     <h2 data-article='${JSON.stringify(article)}'>${article.title}</h2>
     <img data-article='${JSON.stringify(article)}' src="${
@@ -98,16 +98,17 @@ function renderdata(data) {
     <div data-article='${JSON.stringify(article)}' id="liker" >
    <i data-article='${JSON.stringify(
      article
-   )}' id="Love"onclick="myFunction(event)" class="fa-solid fa-heart"></i>
+   )}' id="Love"onclick="myFunction(event)" class="${checkarray.includes(article.title) ? "fa-solid fa-heart color" : "fa-solid fa-heart"}"></i>
    </div>
    
     </div>
     
-    >`;
+    `;
   });
   content.innerHTML = d.join("");
 }
-const array = [];
+
+
 function myFunction(event) {
   const trigger = event.target;
   const char = JSON.parse(trigger.dataset.article);
@@ -119,6 +120,7 @@ function myFunction(event) {
   but = document.createElement("button");
   but.id = "removebutton";
   but.innerHTML = "Remove";
+  
   const para = document.createElement("p");
   para.id = "listing";
   head.classList.remove("hide");
@@ -128,22 +130,25 @@ function myFunction(event) {
   para.appendChild(but);
 
   if (trigger.classList.contains("color")) {
-      // head.remove()
+    
     head.innerHTML = "";
     trigger.classList.remove("color");
     array.pop(para);
-    console.log(array)
-    array.map((char) => {
+    checkarray.pop(char.title);
+    console.log(array);
+    array.forEach((char) => {
       head.appendChild(char);
     });
   } else {
     trigger.classList.add("color");
 
     array.push(para);
+    checkarray.push(char.title);
     array.forEach((char) => {
       head.appendChild(char);
     });
-    // console.log(array)
+    console.log(array);
+    console.log(checkarray);
   }
 
   but.addEventListener("click", (event) => {
@@ -151,6 +156,7 @@ function myFunction(event) {
     button.parentElement.remove();
     trigger.classList.remove("color");
     array.pop(para);
+    checkarray.pop(char.title)
     array.forEach((char) => {
       head.appendChild(char);
     });
@@ -160,6 +166,7 @@ function myFunction(event) {
     }
   });
 }
+console.log(array);
 
 content.addEventListener("click", (event) => {
   const trigger = event.target;
@@ -219,16 +226,14 @@ footer.addEventListener("click", (event) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 });
-thankyou.addEventListener('click',event=>{
-  if(event.target.classList.contains("color")){
-    event.target.classList.remove('color')
-  p.innerHTML="Give us a Like!";
-  }else{
-    event.target.classList.add('color')
-    p.innerHTML="Thankyou for your love and Support";
+thankyou.addEventListener("click", (event) => {
+  if (event.target.classList.contains("color")) {
+    event.target.classList.remove("color");
+    p.innerHTML = "Give us a Like!";
+  } else {
+    event.target.classList.add("color");
+    p.innerHTML = "Thankyou for your love and Support";
   }
-  
-
-})
+});
 
 fetchNewsDetails(API + "india_english");
